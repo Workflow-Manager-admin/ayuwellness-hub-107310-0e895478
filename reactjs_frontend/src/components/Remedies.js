@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import RemedyCard from "./RemedyCard";
 import RemedyFilter from "./RemedyFilter";
 import VideoList from "./VideoList";
+import RemedyDetails from "./RemedyDetails";
 
 // Sample remedy data
 const sampleRemedies = [
@@ -35,13 +36,19 @@ const youtubeRemedyKeywords = [
   "Ayurveda home remedies",
   "herbal wellness Ayurveda"
 ];
-
+  
 // PUBLIC_INTERFACE
 function Remedies() {
+  // Add state for details view
   const [selectedCat, setSelectedCat] = useState("All");
+  const [viewRemedy, setViewRemedy] = useState(null);
   const remediesToShow = selectedCat === "All"
     ? sampleRemedies
     : sampleRemedies.filter(r => r.category === selectedCat);
+
+  if (viewRemedy) {
+    return <RemedyDetails remedy={viewRemedy} onBack={() => setViewRemedy(null)} />;
+  }
 
   return (
     <section className="ayu-container">
@@ -49,7 +56,18 @@ function Remedies() {
       <RemedyFilter categories={categories} current={selectedCat} onChange={setSelectedCat} />
       <div className="remedy-list">
         {remediesToShow.map(remedy => (
-          <RemedyCard key={remedy.id} remedy={remedy} />
+          // Clicking a remedy opens details with nutrition info
+          <div
+            key={remedy.id}
+            style={{cursor: "pointer"}}
+            onClick={() => setViewRemedy(remedy)}
+            tabIndex={0}
+            role="button"
+            aria-label={`View remedy details for ${remedy.title}`}
+            onKeyPress={e => { if (e.key === "Enter" || e.key === " ") setViewRemedy(remedy); }}
+          >
+            <RemedyCard remedy={remedy} />
+          </div>
         ))}
       </div>
       <div style={{marginTop: 40}}>

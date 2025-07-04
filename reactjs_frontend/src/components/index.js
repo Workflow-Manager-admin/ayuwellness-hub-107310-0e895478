@@ -7,3 +7,5 @@ export { default as RemedyCard } from "./RemedyCard";
 export { default as RemedyFilter } from "./RemedyFilter";
 export { default as ArticleCard } from "./ArticleCard";
 export { default as VideoList } from "./VideoList";
+export { default as NutritionInfo } from "./NutritionInfo";
+export { default as RemedyDetails } from "./RemedyDetails";
