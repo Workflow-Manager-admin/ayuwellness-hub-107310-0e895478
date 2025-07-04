@@ -10,6 +10,7 @@ import Articles from './components/Articles';
 import Contact from './components/Contact';
 import SymptomChecker from './components/SymptomChecker';
 import AyuBotChat from './components/AyuBotChat';
+import HerbExplorer from './components/HerbExplorer';
 // Herbal styled navigation bar
 function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
@@ -31,6 +32,7 @@ function Navbar() {
       <div className={`navbar-links${navOpen ? " open" : ""}`}>
         <NavLink to="/" end>Home</NavLink>
         <NavLink to="/remedies">Remedies</NavLink>
+        <NavLink to="/herbs">Herb Explorer</NavLink>
         <NavLink to="/quiz">Dosha Quiz</NavLink>
         <NavLink to="/symptom-checker">Symptom Checker</NavLink>
         <NavLink to="/ayubot">Ask AyuBot</NavLink>
@@ -64,6 +66,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/remedies" element={<Remedies />} />
+            <Route path="/herbs" element={<HerbExplorer />} />
             <Route path="/quiz" element={<DoshaQuiz />} />
             <Route path="/symptom-checker" element={<SymptomChecker />} />
             <Route path="/ayubot" element={<AyuBotChat />} />

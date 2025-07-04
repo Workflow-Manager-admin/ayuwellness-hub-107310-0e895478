@@ -10,3 +10,4 @@ export { default as VideoList } from "./VideoList";
 export { default as NutritionInfo } from "./NutritionInfo";
 export { default as RemedyDetails } from "./RemedyDetails";
 export { default as AyuBotChat } from "./AyuBotChat";
+export { default as HerbExplorer } from "./HerbExplorer";

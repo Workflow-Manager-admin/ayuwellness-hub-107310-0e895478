@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Tulsi",
+    "latin_name": "Ocimum tenuiflorum",
+    "synonyms": ["Holy Basil"],
+    "uses_ayurveda": ["Respiratory relief", "Reduces stress (adaptogenic)", "Immunity booster"],
+    "benefits": [
+      "Supports respiratory health",
+      "Reduces fever",
+      "Promotes mind calmness"
+    ],
+    "dosha": ["Vata", "Kapha"],
+    "parts_used": ["Leaves", "Seeds"],
+    "actions": ["Expectorant", "Antipyretic", "Adaptogen"],
+    "description": "Holy Basil (Tulsi) is prized in Ayurveda as a sacred plant that balances Vata and Kapha, used for coughs, stress, and immunity."
+  },
+  {
+    "id": 2,
+    "name": "Ashwagandha",
+    "latin_name": "Withania somnifera",
+    "synonyms": ["Indian Ginseng", "Winter Cherry"],
+    "uses_ayurveda": ["Rejuvenation", "Stress, sleep aid", "Energy tonic"],
+    "benefits": [
+      "Strengthens nerves and muscles",
+      "Reduces anxiety",
+      "Improves sleep quality"
+    ],
+    "dosha": ["Vata"],
+    "parts_used": ["Root"],
+    "actions": ["Adaptogen", "Sedative", "Tonic"],
+    "description": "Ashwagandha is a revered root used for its adaptogenic, rejuvenative and anti-stress properties in Ayurveda."
+  },
+  {
+    "id": 3,
+    "name": "Neem",
+    "latin_name": "Azadirachta indica",
+    "synonyms": ["Indian Lilac"],
+    "uses_ayurveda": ["Skin disorders", "Detox", "Anti-fungal"],
+    "benefits": [
+      "Purifies blood",
+      "Relieves skin irritation",
+      "Antibacterial and antifungal"
+    ],
+    "dosha": ["Pitta", "Kapha"],
+    "parts_used": ["Leaves", "Bark", "Oil"],
+    "actions": ["Detoxifying", "Antimicrobial", "Anti-inflammatory"],
+    "description": "Neem is used to clear the skin, purify the blood and support pitta-kapha imbalances."
+  },
+  {
+    "id": 4,
+    "name": "Triphala",
+    "latin_name": "Blend: Emblica officinalis, Terminalia bellirica, Terminalia chebula",
+    "synonyms": ["Three fruits blend"],
+    "uses_ayurveda": ["Laxative", "Digestive health", "Detoxification"],
+    "benefits": [
+      "Mild natural laxative",
+      "Cleanses the digestive tract",
+      "Balances all three doshas"
+    ],
+    "dosha": ["Vata", "Pitta", "Kapha"],
+    "parts_used": ["Fruits"],
+    "actions": ["Digestive", "Detoxifier"],
+    "description": "Triphala is a traditional blend of three fruits to gently promote digestion and detoxification for all doshas."
+  },
+  {
+    "id": 5,
+    "name": "Turmeric",
+    "latin_name": "Curcuma longa",
+    "synonyms": ["Haldi"],
+    "uses_ayurveda": ["Anti-inflammatory", "Liver tonic", "Skin health"],
+    "benefits": [
+      "Reduces inflammation",
+      "Purifies blood",
+      "Supports joint mobility"
+    ],
+    "dosha": ["Tridoshic"],
+    "parts_used": ["Rhizome"],
+    "actions": ["Anti-inflammatory", "Digestive", "Blood purifier"],
+    "description": "Turmeric is a central spice in Ayurveda for its anti-inflammatory and detoxifying actions on the body and skin."
+  }
+]
