@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route, NavLink, useLocation } from 're
 import './App.css';
 
 // Import feature page components
-// Import feature page components
 import Home from './components/Home';
 import Remedies from './components/Remedies';
 import DoshaQuiz from './components/DoshaQuiz';
 import Articles from './components/Articles';
 import Contact from './components/Contact';
 import SymptomChecker from './components/SymptomChecker';
+import AyuBotChat from './components/AyuBotChat';
 // Herbal styled navigation bar
 function Navbar() {
   const [navOpen, setNavOpen] = useState(false);
@@ -33,6 +33,7 @@ function Navbar() {
         <NavLink to="/remedies">Remedies</NavLink>
         <NavLink to="/quiz">Dosha Quiz</NavLink>
         <NavLink to="/symptom-checker">Symptom Checker</NavLink>
+        <NavLink to="/ayubot">Ask AyuBot</NavLink>
         <NavLink to="/articles">Articles</NavLink>
         <NavLink to="/contact">Contact</NavLink>
       </div>
@@ -65,6 +66,7 @@ function App() {
             <Route path="/remedies" element={<Remedies />} />
             <Route path="/quiz" element={<DoshaQuiz />} />
             <Route path="/symptom-checker" element={<SymptomChecker />} />
+            <Route path="/ayubot" element={<AyuBotChat />} />
             <Route path="/articles" element={<Articles />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
