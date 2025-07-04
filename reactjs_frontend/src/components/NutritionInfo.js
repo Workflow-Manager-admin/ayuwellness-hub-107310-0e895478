@@ -12,109 +12,78 @@ import React, { useState, useEffect } from "react";
  * Shows calories, macros (protein, carbs, fat), and key micronutrients.
  */
 function NutritionInfo({ ingredients = [] }) {
-  const [appId, setAppId] = useState(() => localStorage.getItem("nutritionix_app_id") || "");
-  const [appKey, setAppKey] = useState(() => localStorage.getItem("nutritionix_app_key") || "");
-  const [prompt, setPrompt] = useState(!localStorage.getItem("nutritionix_app_id") || !localStorage.getItem("nutritionix_app_key"));
+  const [appId] = useState(() => localStorage.getItem("nutritionix_app_id") || "");
+  const [appKey] = useState(() => localStorage.getItem("nutritionix_app_key") || "");
   const [nutritionData, setNutritionData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const showApiInfo = !appId || !appKey;
 
-  // Handle API Key prompt
   useEffect(() => {
-    if (!appId || !appKey) setPrompt(true);
-    else setPrompt(false);
-  }, [appId, appKey]);
-
-  // Fetch nutrition info for all ingredients (run once per ingredient change/api key change)
-  useEffect(() => {
-    if (!appId || !appKey || !ingredients.length) return;
     let cancelled = false;
-    setLoading(true);
-    setError("");
-    setNutritionData({});
-    let results = {};
-    let fetched = 0;
 
-    // Nutritionix API "natural language" endpoint to get quick nutrition label info for a food
-    const fetchForIngredient = async (ing) => {
-      // API docs: https://developer.nutritionix.com/docs/v2#get-item
-      // Natural language: https://trackapi.nutritionix.com/docs/natural-language
-      const apiUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
-      try {
-        const resp = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-app-id": appId,
-            "x-app-key": appKey
-          },
-          body: JSON.stringify({ query: ing, timezone: "US/Eastern" })
-        });
-        if (!resp.ok) throw new Error(`API error: ${resp.statusText}`);
-        const json = await resp.json();
-        if (json.errors) throw new Error(json.errors[0]);
-        // Nutritionix result = json.foods[0]: nutrition data object
-        results[ing] = (json.foods && json.foods[0]) ? json.foods[0] : null;
-      } catch (e) {
-        results[ing] = { error: e.message || "Failed to fetch" };
-      }
-      fetched++;
-      // Only set state when all complete (and not cancelled)
-      if (fetched === ingredients.length && !cancelled) {
-        setNutritionData({ ...results });
-        setLoading(false);
-      }
-    };
-
-    ingredients.forEach(ing => fetchForIngredient(ing));
-    return () => { cancelled = true; };
-  }, [appId, appKey, ingredients]);
-
-  // Handle credential save
-  function handleCredSubmit(e) {
-    e.preventDefault();
-    if (appId && appKey) {
-      localStorage.setItem("nutritionix_app_id", appId);
-      localStorage.setItem("nutritionix_app_key", appKey);
-      setPrompt(false);
+    async function fetchAllIngredients() {
+      setLoading(true);
       setError("");
+      setNutritionData({});
+      let results = {};
+      let fetched = 0;
+
+      const fetchForIngredient = async (ing) => {
+        const apiUrl = "https://trackapi.nutritionix.com/v2/natural/nutrients";
+        try {
+          const resp = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-app-id": appId,
+              "x-app-key": appKey
+            },
+            body: JSON.stringify({ query: ing, timezone: "US/Eastern" })
+          });
+          if (!resp.ok) throw new Error(`API error: ${resp.statusText}`);
+          const json = await resp.json();
+          if (json.errors) throw new Error(json.errors[0]);
+          results[ing] = (json.foods && json.foods[0]) ? json.foods[0] : null;
+        } catch (e) {
+          results[ing] = { error: e.message || "Failed to fetch" };
+        }
+        fetched++;
+        if (fetched === ingredients.length && !cancelled) {
+          setNutritionData({ ...results });
+          setLoading(false);
+        }
+      };
+
+      for (const ing of ingredients) {
+        await fetchForIngredient(ing);
+      }
     }
-  }
+
+    if (!showApiInfo && ingredients.length) {
+      fetchAllIngredients();
+    }
+
+    return () => { cancelled = true; };
+  }, [appId, appKey, ingredients, showApiInfo]);
 
   if (!ingredients.length) {
     return null;
   }
 
-  if (prompt) {
+  if (showApiInfo) {
     return (
-      <div className="ayu-container" style={{ background: "#eef6ed", maxWidth: 440, borderRadius: 14, padding: 22, margin: "28px auto" }}>
-        <h3>🥄 Enter Nutritionix API Credentials</h3>
-        <p>
-          To view nutrition facts for herbal remedies, please provide your <a href="https://developer.nutritionix.com/" target="_blank" rel="noopener noreferrer">Nutritionix API</a> credentials.<br />
-          (Credentials are stored locally and never sent anywhere else)
-        </p>
-        <form onSubmit={handleCredSubmit} style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-          <input
-            type="text"
-            placeholder="Nutritionix App ID"
-            value={appId}
-            onChange={e => setAppId(e.target.value)}
-            required
-            style={{ borderRadius: 7, padding: 7, border: "1.1px solid #bdd", fontSize: "1em" }}
-            autoFocus
-          />
-          <input
-            type="text"
-            placeholder="Nutritionix App Key"
-            value={appKey}
-            onChange={e => setAppKey(e.target.value)}
-            required
-            style={{ borderRadius: 7, padding: 7, border: "1.1px solid #bdd", fontSize: "1em" }}
-          />
-          <button type="submit" className="ayu-btn ayu-btn-primary" style={{alignSelf:"flex-end",marginTop:3}}>Save & Continue</button>
-        </form>
+      <div className="ayu-container" style={{ background: "#eef6ed", maxWidth: 440, borderRadius: 14, padding: 22, margin: "28px auto", color: "#8a7b44" }}>
+        <h3>🥄 Nutrition Info (API required)</h3>
+        <div style={{marginTop:16,marginBottom:10}}>
+          <span style={{ fontSize: "1.09em", color: "#ad633c" }}><b>Feature available with API key</b></span>
+        </div>
+        <div>
+          To view nutrition facts for remedies, add your Nutritionix App ID and Key in browser <b>localStorage</b>.<br />
+          <span style={{ fontSize: "0.98em" }}>(This app will not prompt for these. No credentials are stored by the app.)</span>
+        </div>
         <div style={{ fontSize: "0.92em", color: "#7a6842", marginTop: 10 }}>
-          Don’t have credentials? Sign up at <a href="https://developer.nutritionix.com/" target="_blank" rel="noopener noreferrer">Nutritionix Developer Portal</a>.
+          Learn more: <a href="https://developer.nutritionix.com/" target="_blank" rel="noopener noreferrer">Nutritionix Developer Portal</a>
         </div>
       </div>
     );

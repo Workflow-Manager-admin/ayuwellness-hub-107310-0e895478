@@ -9,24 +9,39 @@ import React, { useState } from "react";
  *
  * For educational/demonstration only. API key is never sent directly to OpenAI from frontend.
  */
-// PUBLIC_INTERFACE
+/**
+ * PUBLIC_INTERFACE
+ * AyuBotChat now acts as an info-only stub unless user has a valid OpenAI API key in localStorage.
+ */
 function AyuBotChat() {
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem("openai_api_key") || "");
-  const [showApiPrompt, setShowApiPrompt] = useState(!apiKey);
+  const [apiKey] = useState(() => localStorage.getItem("openai_api_key") || "");
   const [input, setInput] = useState("");
   const [answer, setAnswer] = useState("");
   const [loading, setLoading] = useState(false);
   const [customErr, setCustomErr] = useState("");
   const [messages, setMessages] = useState([]);
 
-  // Handle API key prompt/save
-  const handleApiKeySubmit = (e) => {
-    e.preventDefault();
-    if (apiKey && apiKey.length > 20) {
-      localStorage.setItem("openai_api_key", apiKey.trim());
-      setShowApiPrompt(false);
-    }
-  };
+  const apiKeyMissing = !apiKey || apiKey.length < 20;
+
+  if (apiKeyMissing) {
+    return (
+      <section className="ayu-container" style={{maxWidth:480, margin:"42px auto", background:"#fcf7f0",borderRadius:17,padding:30,border:"1.5px solid #bfd8b8", color:"#7c7160"}}>
+        <h2 style={{marginTop:6,marginBottom:10}}>🤖 Ask AyuBot – Smart Ayurveda Chat</h2>
+        <div style={{fontSize:"1.15em", marginBottom:12,color:"#665e37"}}>This interactive feature uses the OpenAI API to provide smart Ayurveda suggestions as natural language replies.</div>
+        <div style={{marginTop:16,marginBottom:14}}>
+          <span style={{ fontSize: "1.09em", color: "#ad633c" }}><b>Feature available with API key</b></span>
+        </div>
+        <div style={{ color: "#66797a" }}>
+          To enable the AyuBot chat, add your OpenAI API key to your browser&apos;s storage.<br />
+          <span style={{ fontSize: "0.98em" }}>(For privacy, there is <b>no prompt</b>. If you wish to enable this, set <code>openai_api_key</code> in browser <b>localStorage</b>.)</span>
+        </div>
+        <div style={{fontSize:"0.96em", color:"#6d9365",marginTop:18}}>
+          Don’t have a key? Learn more at&nbsp;
+          <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">OpenAI API</a>.
+        </div>
+      </section>
+    );
+  }
 
   // Handle user question submission
   async function handleAskSubmit(e) {
@@ -64,35 +79,6 @@ function AyuBotChat() {
     setInput("");
   }
 
-  // API Key Prompt
-  if (showApiPrompt || !apiKey) {
-    return (
-      <section className="ayu-container" style={{maxWidth:480, margin:"44px auto", background:"#f4fff8",borderRadius:17,padding:24,border:"1.5px solid #bfd8b8"}}>
-        <h2 style={{marginTop:6,marginBottom:10}}>🔑 Enter OpenAI API Key</h2>
-        <p>
-          To use AyuBot for smart Ayurveda suggestions, enter your <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">OpenAI API key</a> below.<br/>
-          (Your key is safely stored only in your browser and never leaves this device, except for secure API calls.)
-        </p>
-        <form onSubmit={handleApiKeySubmit} style={{ display: "flex", gap: 9 }}>
-          <input
-            type="password"
-            placeholder="Paste your OpenAI key here"
-            value={apiKey}
-            onChange={e => setApiKey(e.target.value)}
-            required
-            style={{flex:1, borderRadius:8, padding:8, border:"1.3px solid #bdd", fontSize:"1em"}}
-            autoFocus
-            autoComplete="off"
-          />
-          <button type="submit" className="ayu-btn ayu-btn-primary">Save</button>
-        </form>
-        <div style={{fontSize:"0.96em", color:"#6d9365",marginTop:10}}>
-          Don’t have a key? Get one <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">here</a>.
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="ayu-container" style={{maxWidth:540}}>
       <h2>🤖 Ask AyuBot – Smart Ayurveda Chat</h2>
@@ -114,14 +100,7 @@ function AyuBotChat() {
           {loading ? "Thinking..." : "Ask AyuBot"}
         </button>
       </form>
-      <button
-        className="ayu-btn ayu-btn-chip"
-        style={{marginTop:6,fontSize:"0.91em"}}
-        onClick={() => setShowApiPrompt(true)}
-        aria-label="Change OpenAI API key"
-      >
-        Change OpenAI API key
-      </button>
+      {/* Removed "Change OpenAI API key" button to avoid undefined handler and comply with requirements */}
 
       {customErr && <div style={{
         color: "#ba1e37", background: "#ffefef", borderRadius: 8, padding: "7px 10px", marginTop: 16

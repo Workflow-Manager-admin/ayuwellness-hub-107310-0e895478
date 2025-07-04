@@ -1,34 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-// PUBLIC_INTERFACE
 /**
+ * PUBLIC_INTERFACE
  * VideoList fetches and displays a list of YouTube videos for Ayurveda topics.
- * - Prompts for YouTube API key if not set.
- * - Fetches videos by provided keywords (first match wins, all if showMultiple).
- * - Displays video embeds or thumbnails, with titles and descriptions.
- *
- * Props:
- *   - keywords: array of search terms (string)
- *   - maxResults: number of results per query (default: 4)
- *   - useEmbed: bool, if true show embeds, else show thumbnails (default: true)
- *   - showMultiple: bool, if true run all keywords and flatten results, else first with result (default: false)
+ * If no YouTube Data API key is available, renders an info message and disables video fetching.
  */
 function VideoList({ keywords, maxResults = 4, useEmbed = true, showMultiple = false }) {
-  const [apiKey, setApiKey] = useState(() => localStorage.getItem("yt_api_key") || "");
-  const [promptApiKey, setPromptApiKey] = useState(!localStorage.getItem("yt_api_key"));
+  const [apiKey] = useState(() => localStorage.getItem("yt_api_key") || "");
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Handle API Key prompt
-  useEffect(() => {
-    if (!apiKey) setPromptApiKey(true);
-    else setPromptApiKey(false);
-  }, [apiKey]);
+  const youtubeDisabled = !apiKey || apiKey.length < 10;
 
-  // Fetch videos when apiKey and keywords change
   useEffect(() => {
-    if (!apiKey || !keywords || keywords.length === 0) return;
+    if (youtubeDisabled || !keywords || keywords.length === 0) return;
     setLoading(true);
     setError("");
     setVideos([]);
@@ -52,13 +38,11 @@ function VideoList({ keywords, maxResults = 4, useEmbed = true, showMultiple = f
       try {
         let vidList = [];
         if (showMultiple) {
-          // Fetch for every keyword (flattened)
           for (let kw of keywords) {
             const vids = await fetchForKeyword(kw);
             vidList = vidList.concat(vids);
           }
         } else {
-          // Find first keyword with result
           for (let kw of keywords) {
             const vids = await fetchForKeyword(kw);
             if (vids.length) {
@@ -74,41 +58,23 @@ function VideoList({ keywords, maxResults = 4, useEmbed = true, showMultiple = f
       setLoading(false);
     };
 
-    performFetch();
+    if (!youtubeDisabled) performFetch();
     // eslint-disable-next-line
-  }, [apiKey, keywords, maxResults, showMultiple]);
+  }, [apiKey, keywords, maxResults, showMultiple, youtubeDisabled]);
 
-  // Input field for API Key
-  function handleApiKeySubmit(e) {
-    e.preventDefault();
-    if (apiKey) {
-      localStorage.setItem("yt_api_key", apiKey);
-      setPromptApiKey(false);
-    }
-  }
-
-  if (promptApiKey) {
+  if (youtubeDisabled) {
     return (
-      <div className="ayu-container" style={{ background: "#fffc", maxWidth: 475, borderRadius: 14, padding: 22, margin: "34px auto" }}>
-        <h3>🎥 Enter YouTube API Key</h3>
-        <p>
-          To display Ayurveda video content, please provide your <a href="https://console.developers.google.com/apis/credentials" target="_blank" rel="noopener noreferrer">YouTube Data API v3 key</a>.<br/>
-          (API key is stored locally and never sent anywhere else)
-        </p>
-        <form onSubmit={handleApiKeySubmit} style={{ display: "flex", gap: 10 }}>
-          <input
-            type="text"
-            placeholder="Paste your YouTube API key here"
-            value={apiKey}
-            onChange={e => setApiKey(e.target.value)}
-            required
-            style={{ flex: 1, borderRadius: 8, padding: 8, border: "1.3px solid #bdd", fontSize: "1em" }}
-            autoFocus
-          />
-          <button type="submit" className="ayu-btn ayu-btn-primary">Save</button>
-        </form>
-        <div style={{fontSize: "0.95em", color: "#7c715a", marginTop: 10}}>
-          <b>Note:</b> Free API keys have quota. Videos only load if a valid key is provided.
+      <div className="ayu-container" style={{ background: "#fffcf3", maxWidth: 475, borderRadius: 14, padding: 22, margin: "28px auto", color: "#994e27" }}>
+        <h3>🎥 Ayurvedic Videos Unavailable</h3>
+        <div style={{marginBottom:12}}>
+          <span style={{ fontSize: "1.09em", color: "#ad633c" }}><b>Feature available with YouTube API key</b></span>
+        </div>
+        <div>
+          To view YouTube Ayurveda videos, add your Data API v3 key in browser <b>localStorage</b>.<br />
+          <span style={{ fontSize: "0.97em" }}>(This app never prompts for or stores keys.)</span>
+        </div>
+        <div style={{fontSize: "0.91em", color: "#7c715a", marginTop: 10}}>
+          Learn more: <a href="https://console.developers.google.com/apis/credentials" target="_blank" rel="noopener noreferrer">Google Developers</a>
         </div>
       </div>
     );
