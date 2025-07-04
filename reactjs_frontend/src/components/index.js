@@ -6,3 +6,4 @@ export { default as Contact } from "./Contact";
 export { default as RemedyCard } from "./RemedyCard";
 export { default as RemedyFilter } from "./RemedyFilter";
 export { default as ArticleCard } from "./ArticleCard";
+export { default as VideoList } from "./VideoList";

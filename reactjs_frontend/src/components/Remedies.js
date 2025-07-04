@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import RemedyCard from "./RemedyCard";
 import RemedyFilter from "./RemedyFilter";
+import VideoList from "./VideoList";
 
 // Sample remedy data
 const sampleRemedies = [
@@ -29,6 +30,12 @@ const sampleRemedies = [
 
 const categories = ["All", "Cold & Immunity", "Skin", "Digestion"];
 
+const youtubeRemedyKeywords = [
+  "Ayurvedic remedies",
+  "Ayurveda home remedies",
+  "herbal wellness Ayurveda"
+];
+
 // PUBLIC_INTERFACE
 function Remedies() {
   const [selectedCat, setSelectedCat] = useState("All");
@@ -44,6 +51,13 @@ function Remedies() {
         {remediesToShow.map(remedy => (
           <RemedyCard key={remedy.id} remedy={remedy} />
         ))}
+      </div>
+      <div style={{marginTop: 40}}>
+        <VideoList
+          keywords={youtubeRemedyKeywords}
+          useEmbed={true}
+          maxResults={3}
+        />
       </div>
     </section>
   );

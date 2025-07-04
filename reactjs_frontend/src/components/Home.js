@@ -1,5 +1,6 @@
 import React from "react";
 import RemedyCard from "./RemedyCard";
+import VideoList from "./VideoList";
 
 // Sample featured remedies for home
 const featuredRemedies = [
@@ -19,7 +20,12 @@ const featuredRemedies = [
   },
 ];
 
-const youtubeId = "KECImWX2OzY"; // Sample Ayurveda intro video
+const youtubeKeywords = [
+  "Ayurveda wellness introduction",
+  "Ayurvedic lifestyle tips",
+  "Ayurveda self care",
+  "herbal wellness"
+];
 
 // PUBLIC_INTERFACE
 function Home() {
@@ -42,17 +48,11 @@ function Home() {
 
       <div className="home-video ayu-container">
         <h2>🧘 Ayurvedic Wisdom: Watch & Learn</h2>
-        <div className="video-responsive">
-          <iframe
-            width="360"
-            height="203"
-            src={`https://www.youtube.com/embed/${youtubeId}`}
-            title="Ayurveda Intro"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        </div>
+        <VideoList
+          keywords={youtubeKeywords}
+          useEmbed={true}
+          maxResults={3}
+        />
       </div>
     </section>
   );
