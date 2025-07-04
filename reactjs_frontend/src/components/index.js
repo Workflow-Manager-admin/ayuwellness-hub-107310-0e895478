@@ -1,0 +1,8 @@
+export { default as Home } from "./Home";
+export { default as Remedies } from "./Remedies";
+export { default as DoshaQuiz } from "./DoshaQuiz";
+export { default as Articles } from "./Articles";
+export { default as Contact } from "./Contact";
+export { default as RemedyCard } from "./RemedyCard";
+export { default as RemedyFilter } from "./RemedyFilter";
+export { default as ArticleCard } from "./ArticleCard";

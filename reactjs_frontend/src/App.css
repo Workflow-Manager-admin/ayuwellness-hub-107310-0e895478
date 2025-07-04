@@ -1,0 +1,384 @@
+ /* AYUCARE HERBAL THEME, COLORS, BUTTONS, NAVBAR, CARDS, ETC. */
+
+/* CSS Variables for AyuCare Herbal Theme */
+:root {
+  --ayu-primary: #689f38;
+  --ayu-secondary: #ff5900;
+  --ayu-accent: #d3c6d7;
+  --ayu-bg: #f6fff7;
+  --ayu-white: #fff;
+  --ayu-border: #bfd8b8;
+  --ayu-success: #8bc34a;
+  --ayu-text: #274420;
+  --ayu-footer: #f4f4ea;
+  --ayu-shadow: 0 3px 20px -7px #b2ddbe;
+  --ayu-whatsapp: #25d366;
+}
+
+/* Basic Body */
+body {
+  background: var(--ayu-bg);
+  color: var(--ayu-text);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  margin: 0;
+}
+
+.App.ayu-bg {
+  min-height: 100vh;
+  background: var(--ayu-bg);
+}
+
+.ayu-main {
+  padding: 0 0 32px 0;
+}
+
+.ayu-container {
+  margin: 0 auto;
+  max-width: 950px;
+  padding: 24px 18px;
+}
+
+.home-section .hero {
+  background: linear-gradient(90deg, #e6ffe5 50%, var(--ayu-accent) 100%);
+  box-shadow: var(--ayu-shadow);
+  border-radius: 22px;
+  margin: 24px auto 32px auto;
+  padding: 44px 12px 28px 12px;
+  text-align: center;
+}
+
+.home-title {
+  font-size: 2.6em;
+  color: var(--ayu-primary);
+  margin: 0 0 12px 0;
+  font-weight: 900;
+}
+
+.ayu-highlight {
+  color: var(--ayu-secondary);
+  background: var(--ayu-accent);
+  border-radius: 6px;
+  padding: 2px 8px;
+}
+
+.home-subtitle {
+  font-size: 1.1em;
+  color: #396758;
+  margin-bottom: 26px;
+}
+
+.ayu-btn,
+.ayu-btn-chip,
+.ayu-btn-primary,
+.ayu-btn-secondary,
+.ayu-btn-large,
+.ayu-btn-whatsapp {
+  display: inline-block;
+  padding: 8px 18px;
+  margin: 7px 6px 7px 0;
+  border-radius: 16px;
+  border: none;
+  font-size: 1em;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: bold;
+  background: var(--ayu-white);
+  color: var(--ayu-primary);
+  border: 2px solid var(--ayu-primary);
+  transition: background .25s, color .15s, transform .09s;
+  box-shadow: var(--ayu-shadow);
+}
+
+.ayu-btn:hover, .ayu-btn-chip:hover,
+.ayu-btn-primary:hover, .ayu-btn-secondary:hover, .ayu-btn-large:hover,
+.ayu-btn-whatsapp:hover {
+  background: var(--ayu-primary);
+  color: var(--ayu-white);
+  transform: translateY(-2px) scale(1.04);
+}
+
+.ayu-btn-primary {
+  background: var(--ayu-primary);
+  color: var(--ayu-white);
+  border: 2px solid var(--ayu-primary);
+}
+.ayu-btn-large {
+  font-size: 1.18em;
+  padding: 14px 38px;
+}
+
+.ayu-btn-secondary {
+  color: var(--ayu-secondary);
+  border: 2px solid var(--ayu-secondary);
+  background: var(--ayu-accent);
+}
+.ayu-btn-secondary:hover { background: var(--ayu-secondary); color: var(--ayu-white); }
+
+.ayu-btn-chip {
+  border-radius: 17px;
+  font-size: 0.97em;
+  padding: 6px 14px !important;
+}
+.ayu-btn-chip.active, .ayu-btn-chip.active:hover {
+  background: var(--ayu-primary);
+  color: var(--ayu-white);
+}
+
+.ayu-btn-whatsapp {
+  background: var(--ayu-whatsapp);
+  color: #111;
+  border: 2px solid var(--ayu-whatsapp);
+}
+
+.theme-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: var(--ayu-secondary);
+  color: var(--ayu-white);
+  padding: 9px 17px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--ayu-shadow);
+  transition: background .22s, color .13s, transform .07s;
+  z-index: 40;
+}
+.theme-toggle:hover {
+  background: #ff751a;
+  color: var(--ayu-accent);
+  transform: scale(1.09);
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--ayu-primary);
+  color: var(--ayu-white);
+  padding: 13px 22px;
+  box-shadow: var(--ayu-shadow);
+  border-radius: 0 0 22px 22px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.navbar-brand {
+  font-size: 1.52em;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.ayu-title {
+  font-family: inherit;
+  font-weight: 800;
+  color: var(--ayu-white);
+}
+
+.navbar-toggle {
+  background: none;
+  border: none;
+  color: var(--ayu-accent);
+  font-size: 2em;
+  display: none;
+  margin-left: auto;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.navbar-links a {
+  color: var(--ayu-accent);
+  text-decoration: none;
+  padding: 7px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1.03em;
+  transition: background .16s, color .13s;
+}
+.navbar-links a.active, .navbar-links a:hover {
+  background: var(--ayu-accent);
+  color: var(--ayu-primary);
+}
+.navbar-links.open {
+  display: flex;
+}
+
+/* Cards */
+.ayu-remedy-card, .ayu-article-card {
+  background: var(--ayu-white);
+  border-radius: 19px;
+  box-shadow: var(--ayu-shadow);
+  margin: 13px 6px 13px 0;
+  max-width: 290px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1.3px solid var(--ayu-border);
+}
+.ayu-remedy-card {
+  min-width: 210px;
+}
+.ayu-remedy-card .remedy-img,
+.ayu-article-card .article-img {
+  width: 100%;
+  object-fit: cover;
+  height: 145px;
+  border-bottom: 1px solid var(--ayu-border);
+}
+.remedy-info, .article-content {
+  padding: 13px 16px 13px 16px;
+}
+.remedy-cat {
+  color: var(--ayu-primary);
+  font-weight: 700;
+  font-size: .99em;
+  margin: 5px 0 7px 0;
+  opacity: 0.77;
+}
+.remedy-desc {
+  color: #295d39;
+  font-size: 0.96em;
+}
+
+.remedy-list, .article-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.ayu-article-card {
+  max-width: 320px;
+  flex: 1 1 230px;
+  background: var(--ayu-footer)
+}
+.article-snippet {
+  color: #5a4c44;
+  font-size: .999em;
+}
+
+/* Filters */
+.ayu-remedy-filter {
+  margin: 9px 0 16px 0;
+}
+
+.ayu-quiz-step, .ayu-quiz-result {
+  margin: 29px auto 14px auto;
+  max-width: 500px;
+  background: var(--ayu-footer);
+  border-radius: 14px;
+  box-shadow: var(--ayu-shadow);
+  padding: 26px 18px 18px 18px;
+  color: var(--ayu-primary);
+}
+.ayu-quiz-q { font-weight: 600; margin-bottom: 19px; }
+.ayu-quiz-options { display: flex; flex-direction: column; gap: 13px; }
+.ayu-quiz-result h3 .dosha { font-size: 1.13em; }
+.dosha.vata { color: #7567ff; }
+.dosha.pitta { color: #ff5900; }
+.dosha.kapha { color: #689f38; }
+.ayu-suggestions li { font-size: 1em; }
+
+.ayu-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 13px;
+}
+.ayu-form label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  color: #27553A;
+  margin-bottom: 7px;
+}
+.ayu-form input, .ayu-form textarea {
+  font-size: 1em;
+  border-radius: 11px;
+  border: 1.2px solid var(--ayu-border);
+  padding: 7px 12px;
+  background: var(--ayu-white);
+  margin-top: 3px;
+}
+.ayu-success-msg {
+  background: var(--ayu-success);
+  color: var(--ayu-white);
+  padding: 14px 14px;
+  border-radius: 11px;
+  margin-top: 12px;
+}
+
+/* Responsive YouTube */
+.video-responsive {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
+  height: 0;
+  margin-bottom: 22px;
+}
+.video-responsive iframe {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  border-radius: 16px;
+  box-shadow: var(--ayu-shadow);
+  border: 0;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 7px;
+    right: 7px;
+    font-size: 14px;
+    padding: 7px 14px;
+  }
+  .navbar {
+    flex-direction: column;
+    padding: 8px 6vw 8px 6vw;
+    text-align: left;
+    border-radius: 0 0 14px 14px;
+  }
+  .navbar-links {
+    flex-direction: column;
+    gap: 0;
+    display: none;
+    width: 100%;
+  }
+  .navbar-links.open {
+    display: flex;
+  }
+  .navbar-toggle {
+    display: block;
+    position: absolute;
+    right: 18px;
+    top: 25px;
+    font-size: 2em;
+    z-index: 50;
+  }
+  .home-title {
+    font-size: 2em;
+  }
+  .ayu-container {
+    padding: 13px 7px;
+  }
+  .remedy-list, .article-list {
+    flex-direction: column;
+    gap: 9px;
+  }
+  .ayu-remedy-card, .ayu-article-card {
+    max-width: 98vw;
+    margin-right: 0;
+  }
+}
+
+/* Additional overrides delete default app logo/etc */
+.App-logo { display: none; }
+.App-header { background: none !important; min-height: 0; padding: 0; }
